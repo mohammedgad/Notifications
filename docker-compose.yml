@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+  database:
+    image: postgres:11.1
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-15432}:5432"
+    env_file:
+      - .env
+  redis:
+    image: redis:6.0-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redisdata:/data
+    ports:
+      - "${REDIS_PORT:-16379}:6379"
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "${MAILCATCHER_WEB_PORT:-1080}:1080"
+  localstack:
+    image: localstack/localstack-full
+    ports:
+      - "4566:4566"
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      - SERVICES=sns,s3,sqs
+      - DEFAULT_REGION=eu-central-1
+      - DEBUG=s3
+      - PORT_WEB_UI=8080
+      - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOSTNAME_EXTERNAL=localstack
+      - DATA_DIR=${DATA_DIR- }
+      - AWS_EXECUTION_ENV=True
+      - HOST_TMP_FOLDER=${TMPDIR}
+    volumes:
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+  app:
+    build: .
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    depends_on:
+      - database
+      - redis
+      - mailcatcher
+      - localstack
+    tty: true
+    stdin_open: true
+
+
+
+volumes:
+  postgresdata: {}
+  redisdata: {}
+  localstackdata: {}
