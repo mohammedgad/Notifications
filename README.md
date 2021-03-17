@@ -6,10 +6,10 @@ Notifications is a Microservice for send Push notifications and SMSs using AWS S
 
 ## Installation ⚙️
 Clone the service Repo  
-Enter the Repo Dir `cd /notifications` 
+Enter the Repo Dir `cd /notifications`.  
 Copy the enviroment variables to .env `cp .env.example .env`  
 
-Feel free to edit the following variables
+Feel free to edit the following variables in .env
 ```
 SIDEKIQ_THREADS=10 Number of threads for sidekiq process  
 SMS_LIMIT_PER_MINUTE=100 number of SMS messages processed per minute   
@@ -17,7 +17,7 @@ PUSH_LIMIT_PER_MINUTE=100  number of push notification messages processed per mi
 ```
 
 Run the service `docker-compose up`   
-Create and migrate the database `docker-compose exec app rails db:create db:migrate`
+Create and migrate the database `docker-compose exec app rails db:create db:migrate`.  
 Seed the database with mock user data `docker-compose exec app rails db:seed`
 
 ## Run Rspec Tests 🧪
@@ -35,8 +35,8 @@ Username: username
 Password: password
 
 ## Assumptions 🤔
-The database gets the user data from another service `mocked with seeds for testing`   
-We use AWS SNS to send SMSs and Push Notifications `mocked with localstack`
+* The database gets the user data from another service `mocked with seeds for testing`   
+* We use AWS SNS to send SMSs and Push Notifications `mocked with localstack`
 
 ## Users filters 🚶‍♂️
 filters are sent over notifications creation as json object, the filter is the key and the value is the query you want to filter the users with (example included in the swagger api docs)
@@ -65,4 +65,4 @@ Each one the channel queues has a limit over the queue.
 * Add More Tests
 
 
-Kindly Contact me if you have any questions
+Kindly, feel free to contact me if you have any questions.
