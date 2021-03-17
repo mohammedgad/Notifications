@@ -2,7 +2,7 @@
 
 ## Description
 
-Notifications is a Microservice for send Push notifications and SMSs using AWS SNS 🚀
+Notifications is a Microservice for sending Push notifications and SMSs using AWS SNS 🚀
 
 ## Installation ⚙️
 Clone the service Repo  
