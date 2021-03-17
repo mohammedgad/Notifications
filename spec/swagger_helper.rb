@@ -24,14 +24,50 @@ RSpec.configure do |config|
       paths: {},
       servers: [
         {
-          url: 'https://{defaultHost}',
+          url: 'http://{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'www.example.com'
+              default: 'localhost:3000'
             }
           }
         }
-      ]
+      ],
+      components: {
+        securitySchemes: {
+          basic_auth: {
+            type: :http,
+            scheme: :basic
+          }
+        },
+        schemas: {
+          NotificationModel: {
+            type: 'object',
+            properties: {
+              id: { type: :integer, description: 'notification id' },
+              message_ar: { type: :string, description: 'notification arabic message' },
+              message_en: { type: :string, description: 'notification english message' },
+              filter: { type: :object, description: 'notification users filters' },
+              status: { type: :string, description: 'notification status [pending| fired]' },
+              channel_type: { type: :string, description: 'notification channel type [sms| push]' },
+              created_at: { type: :string, description: 'notification creation datetime'},
+              updated_at: { type: :string, description: 'notification update datetime' }
+            },
+            required: %i[id message_ar message_en channel_type]
+          },
+          NotificationsModel: {
+            type: 'array',
+            items: { '$ref' => "#/components/schemas/NotificationModel" }
+          },
+          error: {
+            type: 'object',
+            properties: { 
+              message: { type: :string, description: 'error message' },
+              status: { type: :string, description: 'error status' },
+              code: { type: :string, description: 'error status code' },
+             }
+          }
+        }
+      }
     }
   }
 

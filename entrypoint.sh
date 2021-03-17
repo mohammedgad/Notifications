@@ -7,6 +7,4 @@ fi
 
 rm -f /app/tmp/pids/server.pid
 
-rails db:create db:migrate
-
 exec "$@"

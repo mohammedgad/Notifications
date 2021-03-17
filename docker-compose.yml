@@ -16,10 +16,6 @@ services:
       - redisdata:/data
     ports:
       - "${REDIS_PORT:-16379}:6379"
-  mailcatcher:
-    image: schickling/mailcatcher
-    ports:
-      - "${MAILCATCHER_WEB_PORT:-1080}:1080"
   localstack:
     image: localstack/localstack-full
     ports:
@@ -28,7 +24,7 @@ services:
     env_file:
       - .env
     environment:
-      - SERVICES=sns,s3,sqs
+      - SERVICES=sns
       - DEFAULT_REGION=eu-central-1
       - DEBUG=s3
       - PORT_WEB_UI=8080
@@ -52,11 +48,18 @@ services:
     depends_on:
       - database
       - redis
-      - mailcatcher
       - localstack
     tty: true
     stdin_open: true
-
+  sidekiq:
+    build: .
+    volumes:
+      - .:/app
+    command: bundle exec sidekiq -q default -q sms_notifications -q push_notifications -c ${SIDEKIQ_THREADS:-10}
+    depends_on:
+      - app
+    env_file:
+      - .env
 
 
 volumes:
