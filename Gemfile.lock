@@ -147,11 +147,11 @@ GEM
     method_source (1.0.0)
     mimemagic (0.3.5)
     mini_mime (1.0.2)
-    mini_portile2 (2.5.0)
+    mini_portile2 (2.5.3)
     minitest (5.14.4)
     msgpack (1.4.2)
     nio4r (2.5.7)
-    nokogiri (1.11.1)
+    nokogiri (1.11.7)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     parallel (1.20.1)
@@ -221,9 +221,6 @@ GEM
       rspec-expectations (~> 3.10)
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
-    rspec-sidekiq (3.1.0)
-      rspec-core (~> 3.0, >= 3.0.0)
-      sidekiq (>= 2.4.0)
     rspec-support (3.10.2)
     rswag-api (2.4.0)
       railties (>= 3.1, < 7.0)
@@ -295,7 +292,6 @@ DEPENDENCIES
   puma (~> 5.0)
   rails (~> 6.1.1)
   rspec-rails (~> 4.0.1)
-  rspec-sidekiq
   rswag-api
   rswag-specs
   rswag-ui
