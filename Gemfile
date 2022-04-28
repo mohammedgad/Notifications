@@ -34,7 +34,7 @@ gem 'globalize', '~> 6.0.0'
 gem 'globalize-accessors'
 gem 'rswag-api'
 gem 'rswag-ui'
-gem 'sidekiq', '~> 5.0', '>= 5.0.5'
+gem 'sidekiq', '~> 5.2'
 gem 'sidekiq-rate-limiter', require: 'sidekiq-rate-limiter/server'
 
 group :development, :test do
